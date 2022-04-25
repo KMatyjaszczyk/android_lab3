@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private PhoneViewModel mPhoneViewModel;
@@ -33,14 +34,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.main, menu); // TODO wyklad "paski aplikacji" - str 107
+        getMenuInflater().inflate(R.menu.main, menu); // TODO wyklad "paski aplikacji" - str 107
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        int id = item.getItemId();
-
+        int id = item.getItemId();
+        if (id == R.id.delete_all_phones) {
+            mPhoneViewModel.deleteAll();
+            Toast.makeText(this, "Deleted all phones", Toast.LENGTH_LONG).show();
+        }
         return super.onOptionsItemSelected(item);
     }
 }
