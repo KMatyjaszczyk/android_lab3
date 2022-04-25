@@ -51,6 +51,10 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.Phon
         public PhoneAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             connectLayoutElementsToFields(itemView);
+            // TODO dodawanie nowego rekordu:
+            // TODO mozemy ustawic onClickListener na calym wierszu:
+            // TODO itemView.setOnClickListener(this)
+            // TODO w adapterze mozemy utworzyc interfejs pozwalajacy na ustawienie listenera
         }
 
         private void connectLayoutElementsToFields(@NonNull View itemView) {
