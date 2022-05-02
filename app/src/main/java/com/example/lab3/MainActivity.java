@@ -19,8 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
     private PhoneViewModel mPhoneViewModel;
     private PhoneListAdapter mAdapter;
-
-    RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
     private FloatingActionButton mFabAdd;
     private ActivityResultLauncher<Intent> mActivityResultLauncher;
 
@@ -29,17 +28,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.phonesRecyclerView);
-        mAdapter = new PhoneListAdapter(this);
-        recyclerView.setAdapter(mAdapter);
+        connectLayoutElementsWithFields();
+        createAdapterForRecyclerView();
+        connectRecyclerViewWithDatabase();
+        setupForAddingNewPhone();
+    }
 
+    private void connectLayoutElementsWithFields() {
+        mRecyclerView = findViewById(R.id.phonesRecyclerView);
         mFabAdd = findViewById(R.id.fabAdd);
+    }
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    private void createAdapterForRecyclerView() {
+        mAdapter = new PhoneListAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void connectRecyclerViewWithDatabase() {
         mPhoneViewModel = new ViewModelProvider(this).get(PhoneViewModel.class);
-
         mPhoneViewModel.getAllPhones().observe(this, phones -> mAdapter.setPhoneList(phones));
+    }
 
+    private void setupForAddingNewPhone() {
         mFabAdd.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, AddPhoneActivity.class);
             mActivityResultLauncher.launch(intent);
@@ -53,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu); // TODO wyklad "paski aplikacji" - str 107
+        getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -62,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.delete_all_phones) {
             mPhoneViewModel.deleteAll();
-            Toast.makeText(this, "Deleted all phones", Toast.LENGTH_LONG).show();
+            String message = getResources().getString(R.string.deletedAllPhonesMessage);
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
-                android:text="Producer"
+                android:text="@string/textViewProducer"
                 android:gravity="center_vertical"
                 />
 
@@ -37,7 +37,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:inputType="text"
-                android:text="Name" />
+                android:text=""
+                android:autofillHints="@string/textViewProducer"
+                android:hint="@string/textViewProducer"/>
         </TableRow>
 
         <TableRow
@@ -50,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
-                android:text="Model"
+                android:text="@string/textViewModel"
                 android:gravity="center_vertical"/>
 
             <EditText
@@ -58,7 +60,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:inputType="text"
-                android:text="Name" />
+                android:text=""
+                android:autofillHints="@string/textViewModel"
+                android:hint="@string/textViewModel"/>
         </TableRow>
 
         <TableRow
@@ -71,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
-                android:text="Android version"
+                android:text="@string/textViewAndroidVersion"
                 android:gravity="center_vertical"/>
 
             <EditText
@@ -79,7 +83,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:inputType="numberDecimal"
-                android:text="Name" />
+                android:text=""
+                android:autofillHints="@string/textViewAndroidVersion"
+                android:hint="@string/textViewAndroidVersion" />
         </TableRow>
 
         <TableRow
@@ -92,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
-                android:text="Web site"
+                android:text="@string/textViewWebsite"
                 android:gravity="center_vertical"/>
 
             <EditText
@@ -100,7 +106,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:inputType="textUri"
-                android:text="Name" />
+                android:text=""
+                android:autofillHints="@string/textViewWebsite"
+                android:hint="@string/textViewWebsite"/>
         </TableRow>
     </TableLayout>
 
@@ -117,28 +125,28 @@
         >
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/buttonWebsite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="WEB SITE"
+            android:text="@string/buttonTextWebsite"
             android:layout_margin="4dp"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/buttonCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="CANCEL"
+            android:text="@string/buttonTextCancel"
             android:layout_margin="4dp"
             />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SAVE"
+            android:text="@string/buttonTextSave"
             android:layout_margin="4dp"
             />
 

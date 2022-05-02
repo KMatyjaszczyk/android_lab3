@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">Lab3</string>
+    <string name="app_name">Phones</string>
+    <string name="deletedAllPhonesMessage">Deleted all phones</string>
+    <string name="textViewExampleProducer">Example producer</string>
+    <string name="textViewExampleModel">Example model</string>
+    <string name="textViewProducer">Producer</string>
+    <string name="textViewModel">Model</string>
+    <string name="textViewAndroidVersion">Android version</string>
+    <string name="textViewWebsite">Web site</string>
+    <string name="buttonTextWebsite">WEB SITE</string>
+    <string name="buttonTextCancel">CANCEL</string>
+    <string name="buttonTextSave">SAVE</string>
 </resources>
