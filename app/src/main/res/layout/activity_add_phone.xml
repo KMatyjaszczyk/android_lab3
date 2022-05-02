@@ -9,13 +9,14 @@
     <TableLayout
         android:id="@+id/tableLayoutAddPhone"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:padding="15dp"
         android:stretchColumns="1"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutAddPhone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <TableRow
             android:layout_width="match_parent"
@@ -27,7 +28,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
-                android:text="Producer" />
+                android:text="Producer"
+                android:gravity="center_vertical"
+                />
 
             <EditText
                 android:id="@+id/editTextAddPhoneProducer"
@@ -47,7 +50,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
-                android:text="Model" />
+                android:text="Model"
+                android:gravity="center_vertical"/>
 
             <EditText
                 android:id="@+id/editTextAddPhoneModel"
@@ -67,7 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
-                android:text="Android version" />
+                android:text="Android version"
+                android:gravity="center_vertical"/>
 
             <EditText
                 android:id="@+id/editTextAddPhoneVersion"
@@ -87,7 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
-                android:text="Web site" />
+                android:text="Web site"
+                android:gravity="center_vertical"/>
 
             <EditText
                 android:id="@+id/editTextAddPhoneWebsite"
@@ -97,5 +103,44 @@
                 android:text="Name" />
         </TableRow>
     </TableLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutAddPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tableLayoutAddPhone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="8dp"
+        >
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="WEB SITE"
+            android:layout_margin="4dp"/>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="CANCEL"
+            android:layout_margin="4dp"
+            />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SAVE"
+            android:layout_margin="4dp"
+            />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
