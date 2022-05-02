@@ -13,4 +13,18 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         tools:listitem="@layout/phone_row"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        tools:layout_editor_absoluteX="340dp"
+        tools:layout_editor_absoluteY="521dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
