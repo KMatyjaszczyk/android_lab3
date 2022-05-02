@@ -1,5 +1,6 @@
 package com.example.lab3;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private PhoneViewModel mPhoneViewModel;
@@ -58,8 +61,26 @@ public class MainActivity extends AppCompatActivity {
 
         mActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                result -> {}
-        );
+                this::processAddingNewPhone);
+    }
+
+    private void processAddingNewPhone(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
+            Intent resultData = Objects.requireNonNull(result.getData());
+            insertNewPhone(resultData);
+        }
+    }
+
+    private void insertNewPhone(Intent resultData) {
+        String producer = resultData.getStringExtra(AddPhoneActivity.PRODUCER_KEY);
+        String model = resultData.getStringExtra(AddPhoneActivity.MODEL_KEY);
+        String androidVersion = resultData.getStringExtra(AddPhoneActivity.VERSION_KEY);
+        String website = resultData.getStringExtra(AddPhoneActivity.WEBSITE_KEY);
+
+        Phone phone = new Phone(producer, model);
+        phone.setVersion(androidVersion.isEmpty() ? null : androidVersion);
+        phone.setWebsiteUrl(website.isEmpty() ? null : website);
+        mPhoneViewModel.insert(phone);
     }
 
     @Override
