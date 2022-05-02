@@ -1,10 +1,12 @@
 package com.example.lab3;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,26 +31,7 @@ public class AddPhoneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_phone);
 
         connectLayoutElementsWithFields();
-
-        addNotNullListenerToTextField(mEditTextAddPhoneProducer);
-        addNotNullListenerToTextField(mEditTextAddPhoneModel);
-
-        mButtonSave.setOnClickListener(view -> {
-            boolean phoneCanBeSaved = isTextFieldNotEmpty(mEditTextAddPhoneProducer)
-                    && isTextFieldNotEmpty(mEditTextAddPhoneModel);
-            if (!phoneCanBeSaved) {
-                Toast.makeText(AddPhoneActivity.this, getResources().getText(R.string.cannotSavePhoneAnnouncement), Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            Intent intent = new Intent(AddPhoneActivity.this, MainActivity.class);
-            intent.putExtra(PRODUCER_KEY, mEditTextAddPhoneProducer.getText().toString());
-            intent.putExtra(MODEL_KEY, mEditTextAddPhoneModel.getText().toString());
-            intent.putExtra(VERSION_KEY, mEditTextAddPhoneVersion.getText().toString());
-            intent.putExtra(WEBSITE_KEY, mEditTextAddPhoneWebsite.getText().toString());
-            setResult(RESULT_OK, intent);
-            finish();
-        });
+        addListenersToLayoutElements();
     }
 
     private void connectLayoutElementsWithFields() {
@@ -59,6 +42,12 @@ public class AddPhoneActivity extends AppCompatActivity {
         mButtonWebsite = findViewById(R.id.buttonWebsite);
         mButtonCancel = findViewById(R.id.buttonCancel);
         mButtonSave = findViewById(R.id.buttonSave);
+    }
+
+    private void addListenersToLayoutElements() {
+        addNotNullListenerToTextField(mEditTextAddPhoneProducer);
+        addNotNullListenerToTextField(mEditTextAddPhoneModel);
+        addOnClickListenerToSaveButton();
     }
 
     private void addNotNullListenerToTextField(EditText textField) {
@@ -73,5 +62,33 @@ public class AddPhoneActivity extends AppCompatActivity {
 
     private boolean isTextFieldNotEmpty(EditText textField) {
         return !TextUtils.isEmpty(textField.getText().toString());
+    }
+
+    private void addOnClickListenerToSaveButton() {
+        mButtonSave.setOnClickListener(this::prepareForAddingNewPhone);
+    }
+
+    private void prepareForAddingNewPhone(View view) {
+        boolean phoneCanBeSaved = isTextFieldNotEmpty(mEditTextAddPhoneProducer)
+                && isTextFieldNotEmpty(mEditTextAddPhoneModel);
+
+        if (!phoneCanBeSaved) {
+            Toast.makeText(AddPhoneActivity.this, getResources().getText(R.string.cannotSavePhoneAnnouncement), Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Intent intentWithPhoneData = preparePhoneData();
+        setResult(RESULT_OK, intentWithPhoneData);
+        finish();
+    }
+
+    @NonNull
+    private Intent preparePhoneData() {
+        Intent intent = new Intent(AddPhoneActivity.this, MainActivity.class);
+        intent.putExtra(PRODUCER_KEY, mEditTextAddPhoneProducer.getText().toString());
+        intent.putExtra(MODEL_KEY, mEditTextAddPhoneModel.getText().toString());
+        intent.putExtra(VERSION_KEY, mEditTextAddPhoneVersion.getText().toString());
+        intent.putExtra(WEBSITE_KEY, mEditTextAddPhoneWebsite.getText().toString());
+        return intent;
     }
 }
