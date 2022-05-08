@@ -11,5 +11,7 @@
     <string name="buttonTextCancel">CANCEL</string>
     <string name="buttonTextSave">SAVE</string>
     <string name="textIsEmptyAnnouncement">This field cannot be empty</string>
-    <string name="cannotSavePhoneAnnouncement">Cannot save the phone. Producer or model is empty</string>
+    <string name="cannotSavePhoneMessage">Cannot save the phone. Invalid data provided</string>
+    <string name="newPhoneAddedMessage">New phone added</string>
+    <string name="cancelledMessage">Cancelled</string>
 </resources>

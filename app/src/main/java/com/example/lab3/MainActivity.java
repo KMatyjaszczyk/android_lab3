@@ -61,14 +61,27 @@ public class MainActivity extends AppCompatActivity {
 
         mActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                this::processAddingNewPhone);
+                this::comeBackFromAddingNewPhone);
+    }
+
+    private void comeBackFromAddingNewPhone(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
+            processAddingNewPhone(result);
+            return;
+        }
+
+        if (result.getResultCode() == RESULT_CANCELED) {
+            Toast.makeText(MainActivity.this, getResources().getText(R.string.cancelledMessage), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        throw new UnsupportedOperationException("Unhandled result type");
     }
 
     private void processAddingNewPhone(ActivityResult result) {
-        if (result.getResultCode() == RESULT_OK) {
-            Intent resultData = Objects.requireNonNull(result.getData());
-            insertNewPhone(resultData);
-        }
+        Intent resultData = Objects.requireNonNull(result.getData());
+        insertNewPhone(resultData);
+        Toast.makeText(MainActivity.this, getResources().getText(R.string.newPhoneAddedMessage), Toast.LENGTH_SHORT).show();
     }
 
     private void insertNewPhone(Intent resultData) {
