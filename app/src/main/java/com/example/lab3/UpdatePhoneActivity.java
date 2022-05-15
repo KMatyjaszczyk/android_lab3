@@ -3,7 +3,9 @@ package com.example.lab3;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -57,6 +59,7 @@ public class UpdatePhoneActivity extends AppCompatActivity {
     private void addListenersToLayoutElements() {
         addNotNullListenerToTextField(mEditTextProducer);
         addNotNullListenerToTextField(mEditTextModel);
+        mButtonWebsite.setOnClickListener(this::goToWebsite);
         mButtonCancel.setOnClickListener(this::abandonUpdatingPhone);
         mButtonUpdate.setOnClickListener(this::prepareForUpdatingPhone);
     }
@@ -73,6 +76,17 @@ public class UpdatePhoneActivity extends AppCompatActivity {
 
     private boolean isTextFieldNotEmpty(EditText textField) {
         return !TextUtils.isEmpty(textField.getText().toString());
+    }
+
+    private void goToWebsite(View view) {
+        Uri uri = Uri.parse(mEditTextWebsite.getText().toString());
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(intent);
+        }
+        catch (ActivityNotFoundException e) {
+            Toast.makeText(UpdatePhoneActivity.this, getResources().getText(R.string.cannotGoToWebsiteMessage), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void abandonUpdatingPhone(View view) {

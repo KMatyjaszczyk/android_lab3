@@ -3,7 +3,9 @@ package com.example.lab3;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -42,8 +44,20 @@ public class AddPhoneActivity extends AppCompatActivity {
     private void addListenersToLayoutElements() {
         addNotNullListenerToTextField(mEditTextProducer);
         addNotNullListenerToTextField(mEditTextModel);
+        mButtonWebsite.setOnClickListener(this::goToWebsite);
         mButtonSave.setOnClickListener(this::prepareForAddingNewPhone);
         mButtonCancel.setOnClickListener(this::abandonAddingNewPhone);
+    }
+
+    private void goToWebsite(View view) {
+        Uri uri = Uri.parse(mEditTextWebsite.getText().toString());
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(intent);
+        }
+        catch (ActivityNotFoundException e) {
+            Toast.makeText(AddPhoneActivity.this, getResources().getText(R.string.cannotGoToWebsiteMessage), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void addNotNullListenerToTextField(EditText textField) {
