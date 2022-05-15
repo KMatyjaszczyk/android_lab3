@@ -14,9 +14,11 @@ import java.util.List;
 public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.PhoneAdapterViewHolder> {
     private LayoutInflater mLayoutInflater;
     private List<Phone> mPhoneList;
+    private RecyclerViewOnClickListener mOnClickListener;
 
-    public PhoneListAdapter(Context context) {
+    public PhoneListAdapter(Context context, RecyclerViewOnClickListener listener) {
         this.mLayoutInflater = LayoutInflater.from(context);
+        this.mOnClickListener = listener;
         this.mPhoneList = null;
     }
 
@@ -44,22 +46,32 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.Phon
         notifyDataSetChanged();
     }
 
-    public class PhoneAdapterViewHolder extends RecyclerView.ViewHolder {
+    public List<Phone> getPhoneList() {
+        return this.mPhoneList;
+    }
+
+    public class PhoneAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView mTextViewProducer;
         TextView mTextViewModel;
 
         public PhoneAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             connectLayoutElementsToFields(itemView);
-            // TODO dodawanie nowego rekordu:
-            // TODO mozemy ustawic onClickListener na calym wierszu:
-            // TODO itemView.setOnClickListener(this)
-            // TODO w adapterze mozemy utworzyc interfejs pozwalajacy na ustawienie listenera
         }
 
         private void connectLayoutElementsToFields(@NonNull View itemView) {
             mTextViewProducer = itemView.findViewById(R.id.textViewProducer);
             mTextViewModel = itemView.findViewById(R.id.textViewModel);
         }
+
+        @Override
+        public void onClick(View view) {
+            mOnClickListener.onCLick(view, getAdapterPosition());
+        }
+    }
+
+    public interface RecyclerViewOnClickListener {
+        void onCLick(View view, int position);
     }
 }

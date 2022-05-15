@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String ID_KEY = "id";
     public static final String PRODUCER_KEY = "producer";
     public static final String MODEL_KEY = "model";
     public static final String VERSION_KEY = "version";
@@ -29,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private PhoneListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFabAdd;
-    private ActivityResultLauncher<Intent> mActivityResultLauncher;
+    private ActivityResultLauncher<Intent> mAddPhoneActivityResultLauncher;
+    private ActivityResultLauncher<Intent> mUpdatePhoneActivityResultLauncher;
+    private PhoneListAdapter.RecyclerViewOnClickListener mRecyclerViewOnClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +51,62 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createAdapterForRecyclerView() {
-        mAdapter = new PhoneListAdapter(this);
+        setupForUpdatingPhone();
+        mAdapter = new PhoneListAdapter(this, mRecyclerViewOnClickListener);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void setupForUpdatingPhone() {
+        mRecyclerViewOnClickListener = (view, position) -> {
+            Intent intent = new Intent(MainActivity.this, UpdatePhoneActivity.class);
+            Phone phone = mAdapter.getPhoneList().get(position);
+            intent.putExtra(ID_KEY, phone.getId());
+            intent.putExtra(PRODUCER_KEY, phone.getProducer());
+            intent.putExtra(MODEL_KEY, phone.getModel());
+            intent.putExtra(VERSION_KEY, phone.getVersion());
+            intent.putExtra(WEBSITE_KEY, phone.getWebsiteUrl());
+            mUpdatePhoneActivityResultLauncher.launch(intent);
+        };
+
+        mUpdatePhoneActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                this::comeBackFromUpdatingPhone);
+    }
+
+    private void comeBackFromUpdatingPhone(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
+            processUpdatingNewPhone(result);
+            return;
+        }
+
+        if (result.getResultCode() == RESULT_CANCELED) {
+            Toast.makeText(MainActivity.this, getResources().getText(R.string.cancelledMessage), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        throw new UnsupportedOperationException("Unhandled result type");
+    }
+
+    private void processUpdatingNewPhone(ActivityResult result) {
+        Intent resultData = Objects.requireNonNull(result.getData());
+        updatePhone(resultData);
+        Toast.makeText(MainActivity.this, getResources().getText(R.string.phoneUpdatedMessage), Toast.LENGTH_SHORT).show();
+    }
+
+    private void updatePhone(Intent resultData) {
+        long id = resultData.getLongExtra(ID_KEY, -1L);
+        String producer = resultData.getStringExtra(PRODUCER_KEY);
+        String model = resultData.getStringExtra(MODEL_KEY);
+        String androidVersion = resultData.getStringExtra(VERSION_KEY);
+        String website = resultData.getStringExtra(WEBSITE_KEY);
+
+        Phone phone = new Phone(producer, model);
+        phone.setId(id);
+        phone.setVersion(androidVersion.isEmpty() ? null : androidVersion);
+        phone.setWebsiteUrl(website.isEmpty() ? null : website);
+
+        mPhoneViewModel.update(phone);
     }
 
     private void connectRecyclerViewWithDatabase() {
@@ -61,10 +117,10 @@ public class MainActivity extends AppCompatActivity {
     private void setupForAddingNewPhone() {
         mFabAdd.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, AddPhoneActivity.class);
-            mActivityResultLauncher.launch(intent);
+            mAddPhoneActivityResultLauncher.launch(intent);
         });
 
-        mActivityResultLauncher = registerForActivityResult(
+        mAddPhoneActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 this::comeBackFromAddingNewPhone);
     }
@@ -98,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         Phone phone = new Phone(producer, model);
         phone.setVersion(androidVersion.isEmpty() ? null : androidVersion);
         phone.setWebsiteUrl(website.isEmpty() ? null : website);
+
         mPhoneViewModel.insert(phone);
     }
 

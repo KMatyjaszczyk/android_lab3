@@ -13,6 +13,8 @@
     <string name="buttonTextUpdate">UPDATE</string>
     <string name="textIsEmptyAnnouncement">This field cannot be empty</string>
     <string name="cannotSavePhoneMessage">Cannot save the phone. Invalid data provided</string>
+    <string name="cannotUpdatePhoneMessage">Cannot update the phone. Invalid data provided</string>
     <string name="newPhoneAddedMessage">New phone added</string>
+    <string name="phoneUpdatedMessage">Phone updated</string>
     <string name="cancelledMessage">Cancelled</string>
 </resources>
