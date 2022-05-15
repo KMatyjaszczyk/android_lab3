@@ -12,15 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddPhoneActivity extends AppCompatActivity {
-    public static final String PRODUCER_KEY = "producer";
-    public static final String MODEL_KEY = "model";
-    public static final String VERSION_KEY = "version";
-    public static final String WEBSITE_KEY = "website";
-
-    private EditText mEditTextAddPhoneProducer;
-    private EditText mEditTextAddPhoneModel;
-    private EditText mEditTextAddPhoneVersion;
-    private EditText mEditTextAddPhoneWebsite;
+    private EditText mEditTextProducer;
+    private EditText mEditTextModel;
+    private EditText mEditTextVersion;
+    private EditText mEditTextWebsite;
     private Button mButtonWebsite;
     private Button mButtonCancel;
     private Button mButtonSave;
@@ -35,18 +30,18 @@ public class AddPhoneActivity extends AppCompatActivity {
     }
 
     private void connectLayoutElementsWithFields() {
-        mEditTextAddPhoneProducer = findViewById(R.id.editTextAddPhoneProducer);
-        mEditTextAddPhoneModel = findViewById(R.id.editTextAddPhoneModel);
-        mEditTextAddPhoneVersion = findViewById(R.id.editTextAddPhoneVersion);
-        mEditTextAddPhoneWebsite = findViewById(R.id.editTextAddPhoneWebsite);
-        mButtonWebsite = findViewById(R.id.buttonWebsite);
-        mButtonCancel = findViewById(R.id.buttonCancel);
-        mButtonSave = findViewById(R.id.buttonSave);
+        mEditTextProducer = findViewById(R.id.editTextAddPhoneProducer);
+        mEditTextModel = findViewById(R.id.editTextAddPhoneModel);
+        mEditTextVersion = findViewById(R.id.editTextAddPhoneVersion);
+        mEditTextWebsite = findViewById(R.id.editTextAddPhoneWebsite);
+        mButtonWebsite = findViewById(R.id.buttonAddPhoneWebsite);
+        mButtonCancel = findViewById(R.id.buttonAddPhoneCancel);
+        mButtonSave = findViewById(R.id.buttonAddPhoneSave);
     }
 
     private void addListenersToLayoutElements() {
-        addNotNullListenerToTextField(mEditTextAddPhoneProducer);
-        addNotNullListenerToTextField(mEditTextAddPhoneModel);
+        addNotNullListenerToTextField(mEditTextProducer);
+        addNotNullListenerToTextField(mEditTextModel);
         mButtonSave.setOnClickListener(this::prepareForAddingNewPhone);
         mButtonCancel.setOnClickListener(this::abandonAddingNewPhone);
     }
@@ -66,8 +61,8 @@ public class AddPhoneActivity extends AppCompatActivity {
     }
 
     private void prepareForAddingNewPhone(View view) {
-        boolean phoneCanBeSaved = isTextFieldNotEmpty(mEditTextAddPhoneProducer)
-                && isTextFieldNotEmpty(mEditTextAddPhoneModel);
+        boolean phoneCanBeSaved = isTextFieldNotEmpty(mEditTextProducer)
+                && isTextFieldNotEmpty(mEditTextModel);
 
         if (!phoneCanBeSaved) {
             Toast.makeText(AddPhoneActivity.this, getResources().getText(R.string.cannotSavePhoneMessage), Toast.LENGTH_LONG).show();
@@ -88,10 +83,10 @@ public class AddPhoneActivity extends AppCompatActivity {
     @NonNull
     private Intent preparePhoneData() {
         Intent intent = new Intent(AddPhoneActivity.this, MainActivity.class);
-        intent.putExtra(PRODUCER_KEY, mEditTextAddPhoneProducer.getText().toString());
-        intent.putExtra(MODEL_KEY, mEditTextAddPhoneModel.getText().toString());
-        intent.putExtra(VERSION_KEY, mEditTextAddPhoneVersion.getText().toString());
-        intent.putExtra(WEBSITE_KEY, mEditTextAddPhoneWebsite.getText().toString());
+        intent.putExtra(MainActivity.PRODUCER_KEY, mEditTextProducer.getText().toString());
+        intent.putExtra(MainActivity.MODEL_KEY, mEditTextModel.getText().toString());
+        intent.putExtra(MainActivity.VERSION_KEY, mEditTextVersion.getText().toString());
+        intent.putExtra(MainActivity.WEBSITE_KEY, mEditTextWebsite.getText().toString());
         return intent;
     }
 }

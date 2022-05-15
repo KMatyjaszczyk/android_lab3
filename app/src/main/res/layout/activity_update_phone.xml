@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddPhoneActivity">
+    tools:context=".UpdatePhoneActivity">
 
     <TableLayout
-        android:id="@+id/tableLayoutAddPhone"
+        android:id="@+id/tableLayoutUpdatePhone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:stretchColumns="1"
-        app:layout_constraintBottom_toTopOf="@id/linearLayoutAddPhone"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutUpdatePhone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +24,7 @@
             android:minHeight="48dp">
 
             <TextView
-                android:id="@+id/textViewAddPhoneProducer"
+                android:id="@+id/textViewUpdatePhoneProducer"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
@@ -33,7 +33,7 @@
                 />
 
             <EditText
-                android:id="@+id/editTextAddPhoneProducer"
+                android:id="@+id/editTextUpdatePhoneProducer"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:inputType="text"
@@ -48,7 +48,7 @@
             android:minHeight="48dp">
 
             <TextView
-                android:id="@+id/textViewAddPhoneModel"
+                android:id="@+id/textViewUpdatePhoneModel"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
@@ -56,7 +56,7 @@
                 android:gravity="center_vertical"/>
 
             <EditText
-                android:id="@+id/editTextAddPhoneModel"
+                android:id="@+id/editTextUpdatePhoneModel"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:inputType="text"
@@ -71,7 +71,7 @@
             android:minHeight="48dp">
 
             <TextView
-                android:id="@+id/textViewAddPhoneVersion"
+                android:id="@+id/textViewUpdatePhoneVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
@@ -79,7 +79,7 @@
                 android:gravity="center_vertical"/>
 
             <EditText
-                android:id="@+id/editTextAddPhoneVersion"
+                android:id="@+id/editTextUpdatePhoneVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:inputType="numberDecimal"
@@ -94,7 +94,7 @@
             android:minHeight="48dp">
 
             <TextView
-                android:id="@+id/textViewAddPhoneWebsite"
+                android:id="@+id/textViewUpdatePhoneWebsite"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
@@ -102,7 +102,7 @@
                 android:gravity="center_vertical"/>
 
             <EditText
-                android:id="@+id/editTextAddPhoneWebsite"
+                android:id="@+id/editTextUpdatePhoneWebsite"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:inputType="textUri"
@@ -113,11 +113,11 @@
     </TableLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutAddPhone"
+        android:id="@+id/linearLayoutUpdatePhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/tableLayoutAddPhone"
+        app:layout_constraintTop_toBottomOf="@id/tableLayoutUpdatePhone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -125,7 +125,7 @@
         >
 
         <Button
-            android:id="@+id/buttonAddPhoneWebsite"
+            android:id="@+id/buttonUpdatePhoneWebsite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -133,7 +133,7 @@
             android:layout_margin="4dp"/>
 
         <Button
-            android:id="@+id/buttonAddPhoneCancel"
+            android:id="@+id/buttonUpdatePhoneCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -142,11 +142,11 @@
             />
 
         <Button
-            android:id="@+id/buttonAddPhoneSave"
+            android:id="@+id/buttonUpdatePhoneUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/buttonTextSave"
+            android:text="@string/buttonTextUpdate"
             android:layout_margin="4dp"
             />
 

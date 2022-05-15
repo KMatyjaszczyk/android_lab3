@@ -10,6 +10,7 @@
     <string name="buttonTextWebsite">WEB SITE</string>
     <string name="buttonTextCancel">CANCEL</string>
     <string name="buttonTextSave">SAVE</string>
+    <string name="buttonTextUpdate">UPDATE</string>
     <string name="textIsEmptyAnnouncement">This field cannot be empty</string>
     <string name="cannotSavePhoneMessage">Cannot save the phone. Invalid data provided</string>
     <string name="newPhoneAddedMessage">New phone added</string>

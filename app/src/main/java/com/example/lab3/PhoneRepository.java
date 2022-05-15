@@ -32,4 +32,8 @@ public class PhoneRepository {
     void delete(Phone phone) {
         PhoneRoomDatabase.databaseWriteExecutor.execute(() -> mPhoneDao.delete(phone));
     }
+
+    void update(Phone phone) {
+        PhoneRoomDatabase.databaseWriteExecutor.execute(() -> mPhoneDao.update(phone));
+    }
 }

@@ -20,6 +20,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String PRODUCER_KEY = "producer";
+    public static final String MODEL_KEY = "model";
+    public static final String VERSION_KEY = "version";
+    public static final String WEBSITE_KEY = "website";
+
     private PhoneViewModel mPhoneViewModel;
     private PhoneListAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -85,10 +90,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertNewPhone(Intent resultData) {
-        String producer = resultData.getStringExtra(AddPhoneActivity.PRODUCER_KEY);
-        String model = resultData.getStringExtra(AddPhoneActivity.MODEL_KEY);
-        String androidVersion = resultData.getStringExtra(AddPhoneActivity.VERSION_KEY);
-        String website = resultData.getStringExtra(AddPhoneActivity.WEBSITE_KEY);
+        String producer = resultData.getStringExtra(PRODUCER_KEY);
+        String model = resultData.getStringExtra(MODEL_KEY);
+        String androidVersion = resultData.getStringExtra(VERSION_KEY);
+        String website = resultData.getStringExtra(WEBSITE_KEY);
 
         Phone phone = new Phone(producer, model);
         phone.setVersion(androidVersion.isEmpty() ? null : androidVersion);
