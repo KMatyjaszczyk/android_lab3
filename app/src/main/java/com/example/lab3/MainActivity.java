@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String WEBSITE_KEY = "website";
 
     private PhoneViewModel mPhoneViewModel;
-    private PhoneListAdapter mAdapter;
+    private PhoneListAdapter mPhonesAdapter;
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFabAdd;
     private ActivityResultLauncher<Intent> mAddPhoneActivityResultLauncher;
     private ActivityResultLauncher<Intent> mUpdatePhoneActivityResultLauncher;
     private PhoneListAdapter.RecyclerViewOnClickListener mRecyclerViewOnClickListener;
+    private ItemTouchHelper.SimpleCallback mItemTouchHelperCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         connectLayoutElementsWithFields();
+        setupRemovingItems();
         createAdapterForRecyclerView();
         connectRecyclerViewWithDatabase();
         setupForAddingNewPhone();
@@ -50,17 +53,38 @@ public class MainActivity extends AppCompatActivity {
         mFabAdd = findViewById(R.id.fabAdd);
     }
 
+    private void setupRemovingItems() {
+        int noDraggingValue = 0;
+
+        mItemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(noDraggingValue, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int phoneIndex = viewHolder.getAdapterPosition();
+                Phone phone = mPhonesAdapter.getPhoneList().get(phoneIndex);
+                mPhoneViewModel.delete(phone);
+                mPhonesAdapter.notifyItemRemoved(phoneIndex);
+                Toast.makeText(MainActivity.this, getResources().getText(R.string.phoneDeletedMessage), Toast.LENGTH_SHORT).show();
+            }
+        };
+    }
+
     private void createAdapterForRecyclerView() {
         setupForUpdatingPhone();
-        mAdapter = new PhoneListAdapter(this, mRecyclerViewOnClickListener);
-        mRecyclerView.setAdapter(mAdapter);
+        mPhonesAdapter = new PhoneListAdapter(this, mRecyclerViewOnClickListener);
+        new ItemTouchHelper(mItemTouchHelperCallback).attachToRecyclerView(mRecyclerView);
+        mRecyclerView.setAdapter(mPhonesAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void setupForUpdatingPhone() {
         mRecyclerViewOnClickListener = (view, position) -> {
             Intent intent = new Intent(MainActivity.this, UpdatePhoneActivity.class);
-            Phone phone = mAdapter.getPhoneList().get(position);
+            Phone phone = mPhonesAdapter.getPhoneList().get(position);
             intent.putExtra(ID_KEY, phone.getId());
             intent.putExtra(PRODUCER_KEY, phone.getProducer());
             intent.putExtra(MODEL_KEY, phone.getModel());
@@ -111,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void connectRecyclerViewWithDatabase() {
         mPhoneViewModel = new ViewModelProvider(this).get(PhoneViewModel.class);
-        mPhoneViewModel.getAllPhones().observe(this, phones -> mAdapter.setPhoneList(phones));
+        mPhoneViewModel.getAllPhones().observe(this, phones -> mPhonesAdapter.setPhoneList(phones));
     }
 
     private void setupForAddingNewPhone() {

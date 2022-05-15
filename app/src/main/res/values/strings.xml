@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Phones</string>
     <string name="deletedAllPhonesMessage">Deleted all phones</string>
+    <string name="phoneDeletedMessage">Phone deleted</string>
     <string name="textViewExampleProducer">Example producer</string>
     <string name="textViewExampleModel">Example model</string>
     <string name="textViewProducer">Producer</string>
